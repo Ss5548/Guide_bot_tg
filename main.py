@@ -40,6 +40,10 @@ def send_attractions_in_parts(chat_id, attractions_list):
 @bot.message_handler(func=lambda message: state.get(message.chat.id, {}).get('status') == 'waiting_for_city')
 def get_attractions(message):
     city = message.text.strip().lower()
+    bot.send_message(message.chat.id,
+                     f"Добро пожаловать в {city.capitalize()}! "
+                     f"Откройте для себя его красоту, искусство и уникальные достопримечательности. "
+                     f"Не забудьте взглянуть на погоду перед выходом! 🌹🚲")
     if not city:
         bot.send_message(message.chat.id,
                          "Вы ввели пустое название города. Пожалуйста, введите название города еще раз.")
@@ -78,7 +82,7 @@ def get_attractions(message):
 
     send_attractions_in_parts(message.chat.id, attractions[message.chat.id])
 
-    bot.send_message(message.chat.id, "Выберите номер достопримечательности, который вам больше приглянулся: ")
+    bot.send_message(message.chat.id, "Введите номер достопримечательности, который вам больше приглянулся: ")
     state[message.chat.id]['status'] = 'waiting_for_selection'
 
 
@@ -182,12 +186,13 @@ def handle_action(message):
         bot.send_message(message.chat.id, 'Введите название города, который вы хотите исследовать:')
         state[message.chat.id]['status'] = 'waiting_for_city'
     elif 'купить авиабилеты' in action:
-        bot.send_message(message.chat.id, 'Переход на сайт для покупки авиабилетов.',
+        bot.send_message(message.chat.id, 'Можете перейти на сайт и приобрести билеты для путешествий. 😊',
                          reply_markup=types.InlineKeyboardMarkup().add(
                              types.InlineKeyboardButton('Купить билеты', url='https://www.aviasales.ru/')))
     else:
         bot.send_message(message.chat.id, 'Пожалуйста, выберите один из предложенных вариантов.')
         start(message)  # Повторно вызываем функцию start для отображения кнопок
+
 
 
 bot.polling(none_stop=True)
