@@ -41,7 +41,7 @@ def send_attractions_in_parts(chat_id, attractions_list):
 def get_attractions(message):
     city = message.text.strip().lower()
     bot.send_message(message.chat.id,
-                     f"Добро пожаловать в {city.capitalize()}! "
+                     f"Добро пожаловать в город {city.capitalize()}! "
                      f"Откройте для себя его красоту, искусство и уникальные достопримечательности. "
                      f"Не забудьте взглянуть на погоду перед выходом! 🌹🚲")
     if not city:
